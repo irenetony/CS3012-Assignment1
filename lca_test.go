@@ -1,3 +1,12 @@
-package lca 
+package lca
 
-func 
+func CreateATree() *Node
+{
+	return &Node
+}
+func SampleTest(*testing.T)
+{
+	x := BinaryTree()
+	expected := Node{}
+	
+}
