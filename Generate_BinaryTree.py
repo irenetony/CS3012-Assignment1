@@ -20,3 +20,20 @@ class Node:
                     self.right.insertNode(data)
         else:
             self.data = data
+
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()
+        print(self.data),
+        if self.right:
+            self.right.PrintTree()
+
+def main():
+    root = Node(12)
+    root.insertNode(6)
+    root.insertNode(14)
+    root.insertNode(3)
+
+    root.PrintTree()
+
+ # main()
