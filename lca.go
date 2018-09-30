@@ -43,20 +43,19 @@ func (n *Node) Insert(key int, data int) error {
 	return nil
 }
 
-func (n *Node) Get(x int) (int){
+func (n *Node) Get(x int) int {
 	if n == nil {
 		return -1
 	}
 	switch {
-//If the current node contains the value, return the node.	
-	case s == n.Key:
+	//If the current node contains the value, return the node.
+	case x == n.Key:
 		return n.Value
-//If the data value is less than the current node’s value, call Find for the left child node,	
-	case s < n.Key:
-		return n.Left.Get(s)
-//else call Find for the right child node.	
+		//If the data value is less than the current node’s value, call Find for the left child node,
+	case x < n.Key:
+		return n.Left.Get(x)
+		//else call Find for the right child node.
 	default:
-		return n.Right.Get(s)
+		return n.Right.Get(x)
 	}
-}
 }
