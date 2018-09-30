@@ -37,19 +37,19 @@ func CreateATree() *Node
 }
 func EmptyTreeTest(*testing.T)
 {
-	x := BinaryTree()
+	x := EmptyBinaryTree()
 	expected := Node{}
 	if x != expected {t.Errorf("Your program does not create a binary tree")}
 }
-func insertTest(*testing.T)
+func InsertTest(*testing.T)
 {
 	x := CreateATree()
-	x.add(4,4)
+	x.Insert(4,4)
 	expected := Node{Key:4, Value:4}
 	if x.Value != expected.Value{t.Errorf("Your program does not insert a node correctly")}
 
-	x.add(1,1)
-	x.add(3,3)
+	x.Insert(1,1)
+	x.Insert(3,3)
 	expected := Node
 	{
 		Left:  &Node
@@ -72,7 +72,7 @@ func insertTest(*testing.T)
 	}
 
 }
-func getTest(*testing.T)
+func GetTest(*testing.T)
 {
 	x := Node
 	{
@@ -92,13 +92,13 @@ func getTest(*testing.T)
 		Value: 4,
 	}
 	expected := 1
-	value := x.get(1)
+	value := x.Get(1)
 
 	if value.Value == expected{
 		t.Errorf("Your program does not return the searched node correctly")
 	}
 }
-func lcaTest(*testing.T)
+func LcaTest(*testing.T)
 {
 	x := CreateATree()
 	expected := 6
