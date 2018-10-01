@@ -1,6 +1,10 @@
 package lca
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/google/go-cmp/cmp"
+)
 
 func CreateATree() *Node {
 	return &Node{
@@ -79,8 +83,18 @@ func TestGet(t *testing.T) {
 	expected := 1
 	value := x.Get(1)
 
-	if value == expected {
-		t.Errorf("Your program does not return the searched node correctly")
+	if value != expected {
+		t.Errorf("Your program does not return the searched node correctly. Expected: %v, Got: %v", expected, value)
+	}
+}
+
+func TestFindPath(t *testing.T) {
+	x := CreateATree()
+	expected := []int{4, 6, 5}
+
+	ans := x.FindPath(5)
+	if !cmp.Equal(expected, ans) {
+		t.Errorf("Expected: %v, Got: %v", expected, ans)
 	}
 }
 func TestLca(t *testing.T) {
@@ -89,7 +103,7 @@ func TestLca(t *testing.T) {
 	ans := x.LCA(5, 7)
 
 	if ans != expected {
-		t.Errorf("Your program does not return the lowest common ancestor node correctly")
+		t.Errorf("Your program does not return the lowest common ancestor node correctly. Expected: %v, Got: %v", expected, ans)
 	}
 
 }

@@ -77,10 +77,10 @@ func (n *Node) findPath(path *[]int, x int) bool {
 	if n.Key == x {
 		contains = true
 	}
-	if n.Left != nil && n.Left.findPath(path, x) {
+	if x < n.Key && n.Left != nil && n.Left.findPath(path, x) {
 		contains = true
 	}
-	if n.Right != nil && n.Right.findPath(path, x) {
+	if x > n.Key && n.Right != nil && n.Right.findPath(path, x) {
 		contains = true
 	}
 	return contains
