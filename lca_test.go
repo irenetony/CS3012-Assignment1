@@ -1,109 +1,95 @@
 package lca
 
-func CreateATree() *Node 
-{
-	return &Node
-	{
-		Left: &Node
-		{
-			Right: &Node
-			{
-				Key: 3,
-				Value: 3,
-			}
-			Key: 1,
-			Value: 1,
-		}
-		Right: &Node
-		{
-			Left: &Node
-			{
-				Key: 5,
-				Value: 5,
-			}
-			Right: &Node
-			{
-				Key: 7,
-				Value: 7,
-			}
+import "testing"
 
-			Key: 6
-			Value: 6,
-		},
-
-		Key: 4,
-		Value: 4,
-	}
-}
-func EmptyTreeTest(*testing.T)
-{
-	x := EmptyBinaryTree()
-	expected := Node{}
-	if x != expected {t.Errorf("Your program does not create a binary tree")}
-}
-func InsertTest(*testing.T)
-{
-	x := CreateATree()
-	x.Insert(4,4)
-	expected := Node{Key:4, Value:4}
-	if x.Value != expected.Value{t.Errorf("Your program does not insert a node correctly")}
-
-	x.Insert(1,1)
-	x.Insert(3,3)
-	expected := Node
-	{
-		Left:  &Node
-		{
-			Right: &Node
-			{
-				Key: 3,
+func CreateATree() *Node {
+	return &Node{
+		Left: &Node{
+			Right: &Node{
+				Key:   3,
 				Value: 3,
 			},
-
-			Key: 1, 
+			Key:   1,
 			Value: 1,
 		},
-
-		Key: 4,
+		Right: &Node{
+			Left: &Node{
+				Key:   5,
+				Value: 5,
+			},
+			Right: &Node{
+				Key:   7,
+				Value: 7,
+			},
+			Key:   6,
+			Value: 6,
+		},
+		Key:   4,
 		Value: 4,
 	}
-	if x.Value != expected.Value || x.Left.Value != expected.Left.Value || x.Left.Right.Value != expected.Left.Right.Value{
+}
+func TestEmptyTree(t *testing.T) {
+	x := EmptyBinaryTree()
+	expected := Node{}
+	if *x != expected {
+		t.Errorf("Your program does not create a binary tree")
+	}
+}
+
+func TestInsert(t *testing.T) {
+	x := CreateATree()
+	x.Insert(4, 4)
+	expected := Node{Key: 4, Value: 4}
+	if x.Value != expected.Value {
+		t.Errorf("Your program does not insert a node correctly")
+	}
+
+	x.Insert(1, 1)
+	x.Insert(3, 3)
+	expected = Node{
+		Left: &Node{
+			Right: &Node{
+				Key:   3,
+				Value: 3,
+			},
+			Key:   1,
+			Value: 1,
+		},
+		Key:   4,
+		Value: 4,
+	}
+	if x.Value != expected.Value || x.Left.Value != expected.Left.Value || x.Left.Right.Value != expected.Left.Right.Value {
 		t.Errorf("Your program does not insert many nodes correctly")
 	}
 
 }
-func GetTest(*testing.T)
-{
-	x := Node
-	{
-		Left:  &Node
-		{
-			Right: &Node
-			{
-				Key: 3,
+func TestGet(t *testing.T) {
+	x := Node{
+		Left: &Node{
+			Right: &Node{
+				Key:   3,
 				Value: 3,
 			},
-
-			Key: 1, 
+			Key:   1,
 			Value: 1,
 		},
-
-		Key: 4,
+		Key:   4,
 		Value: 4,
 	}
 	expected := 1
 	value := x.Get(1)
 
-	if value.Value == expected{
+	if value == expected {
 		t.Errorf("Your program does not return the searched node correctly")
 	}
 }
-func LcaTest(*testing.T)
-{
+func TestLca(t *testing.T) {
 	x := CreateATree()
 	expected := 6
-	ans := x.LCA(5,7)
+	ans := x.LCA(5, 7)
 
-	if ans != expected{t.Errorf("Your program does not return the lowest common ancestor node correctly")}
+	if ans != expected {
+		t.Errorf("Your program does not return the lowest common ancestor node correctly")
+	}
 
 }
