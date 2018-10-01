@@ -59,3 +59,49 @@ func (n *Node) Get(x int) int {
 		return n.Right.Get(x)
 	}
 }
+func (n *Node) FindPath(x int) []int {
+	var path []int
+	if hasPath := n.findPath(&path, x); !hasPath {
+		return nil
+	}
+	return path
+}
+func (n *Node) findPath(path *[]int, x int) bool {
+	var contains bool
+
+	if n == nil {
+		contains = false
+	}
+	*path = append(*path, n.Key)
+
+	if n.Key == x {
+		contains = true
+	}
+	if n.Left != nil && n.Left.findPath(path, x) {
+		contains = true
+	}
+	if n.Right != nil && n.Right.findPath(path, x) {
+		contains = true
+	}
+	return contains
+}
+
+func (n *Node) LCA(x int, y int) int {
+
+	node1Path := n.FindPath(x)
+	node2Path := n.FindPath(y)
+
+	var shortLen int
+
+	if len(node1Path) < len(node2Path) {
+		shortLen = len(node1Path)
+	} else {
+		shortLen = len(node2Path)
+	}
+	for i := shortLen - 1; i >= 0; i-- {
+		if node1Path[i] == node2Path[i] {
+			return node1Path[i]
+		}
+	}
+	return -1
+}
