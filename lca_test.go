@@ -41,6 +41,13 @@ func TestEmptyTree(t *testing.T) {
 }
 
 func TestInsert(t *testing.T) {
+	// var nilNode *Node
+
+	// nilNode, err := nilNode.Insert(1, 1)
+	// if err != nil {
+	// 	t.Error(err)
+	// }
+
 	x := CreateATree()
 	x.Insert(4, 4)
 	expected := Node{Key: 4, Value: 4}
