@@ -21,17 +21,18 @@ func TestEmptyTree(t *testing.T) {
 }
 
 func TestInsert(t *testing.T) {
-	// var nilNode *Node
 
-	// nilNode, err := nilNode.Insert(1, 1)
-	// if err != nil {
-	// 	t.Error(err)
-	// }
-
-	x := CreateATree()
-	x.Insert(4, 4)
-	expected := Node{Key: 4, Value: 4}
-	if x.Value != expected.Value {
+	x := CreateAGraph()
+	x.AddEdge(1, 2, 1)
+	expected := Graph{
+		NumNodes: 1,
+		Edges: &Edge{
+			From:   1,
+			To:     2,
+			Weight: 1,
+		}
+	}
+	if x.NumNodes != expected.NumNodes {
 		t.Errorf("Your program does not insert a node correctly")
 	}
 
