@@ -3,12 +3,24 @@ package lca
 import "errors"
 
 //Contruct a Node
-
 type Node struct {
 	Left  *Node
 	Right *Node
 	Key   int
 	Value int
+}
+
+//Garph: Construct a Graph
+type Graph struct {
+	NumNodes int
+	Edges    [][]Edge
+}
+
+//Construct an edge for a graph
+type Edge struct {
+	From   int
+	To     int
+	Weight int
 }
 
 func EmptyBinaryTree() *Node {

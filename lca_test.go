@@ -6,30 +6,10 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func CreateATree() *Node {
-	return &Node{
-		Left: &Node{
-			Right: &Node{
-				Key:   3,
-				Value: 3,
-			},
-			Key:   1,
-			Value: 1,
-		},
-		Right: &Node{
-			Left: &Node{
-				Key:   5,
-				Value: 5,
-			},
-			Right: &Node{
-				Key:   7,
-				Value: 7,
-			},
-			Key:   6,
-			Value: 6,
-		},
-		Key:   4,
-		Value: 4,
+func CreateAGraph() *Graph {
+	return &Graph{
+		NumNodes: 5,
+		Edges:    make([][]Edge, 5),
 	}
 }
 func TestEmptyTree(t *testing.T) {
