@@ -12,9 +12,9 @@ func CreateAGraph() *Graph {
 		Edges:    make([][]Edge, 5),
 	}
 }
-func TestEmptyTree(t *testing.T) {
-	x := EmptyBinaryTree()
-	expected := Node{}
+func TestEmptyGraph(t *testing.T) {
+	x := EmptyGraph()
+	expected := Graph{}
 	if *x != expected {
 		t.Errorf("Your program does not create a binary tree")
 	}
@@ -26,31 +26,21 @@ func TestInsert(t *testing.T) {
 	x.AddEdge(1, 2, 1)
 	expected := Graph{
 		NumNodes: 1,
-		Edges: &Edge{
-			From:   1,
-			To:     2,
-			Weight: 1,
-		}
+		Edges:    &Edge{From: 1, To: 2, Weight: 1},
 	}
 	if x.NumNodes != expected.NumNodes {
 		t.Errorf("Your program does not insert a node correctly")
 	}
 
-	x.Insert(1, 1)
-	x.Insert(3, 3)
-	expected = Node{
-		Left: &Node{
-			Right: &Node{
-				Key:   3,
-				Value: 3,
-			},
-			Key:   1,
-			Value: 1,
-		},
-		Key:   4,
-		Value: 4,
+	x.AddEdge(1, 3, 1)
+	x.AddEdge(3, 4, 1)
+	expected = Graph{
+		NumNodes: 4,
+		Edges:    &Edge{From: 1, To: 2, Weight: 1},
+		&Edge{From: 1, To: 3, Weight: 1},
+		&Edge{From: 3, To: 4, Weight: 1},
 	}
-	if x.Value != expected.Value || x.Left.Value != expected.Left.Value || x.Left.Right.Value != expected.Left.Right.Value {
+	if x.NumNodes != expected.NumNodes {
 		t.Errorf("Your program does not insert many nodes correctly")
 	}
 

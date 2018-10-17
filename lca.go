@@ -23,8 +23,9 @@ type Edge struct {
 	Weight int
 }
 
-func EmptyBinaryTree() *Node {
-	return &Node{}
+//EmptyGraph: returns an empty graph
+func EmptyGraph() *Graph {
+	return &Graph{}
 }
 
 func (n *Node) Insert(key int, data int) error {
