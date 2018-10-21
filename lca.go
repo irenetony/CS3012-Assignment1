@@ -13,7 +13,9 @@ type Node struct {
 //Garph: Construct a Graph
 type Graph struct {
 	NumNodes int
-	Edges    [][]Edge
+	Edges    [][]int
+	Visited  []int
+	Min      int
 }
 
 //Construct an edge for a graph
@@ -27,7 +29,25 @@ type Edge struct {
 func EmptyGraph() *Graph {
 	return &Graph{}
 }
+func CreateGraph(x int) *Graph {
+	edges := make([][]int, x)
+	for i := range edges {
+		edges[i] = make([]int, x)
+	}
+	return &Graph{
+		NumNodes: x,
+		Edges:    edges,
+		Visited:  make([]int, x),
+		Min:      x,
+	}
 
+}
+func (g *Graph) AddEdge(x int, y int) {
+
+}
+func (g *Graph) RemoveEdge(x int, y int) {
+
+}
 func (n *Node) Insert(key int, data int) error {
 
 	if n == nil {
@@ -99,22 +119,22 @@ func (n *Node) findPath(path *[]int, x int) bool {
 	return contains
 }
 
-func (n *Node) LCA(x int, y int) int {
+func (n *Graph) LCA(x int, y int) int {
 
-	node1Path := n.FindPath(x)
-	node2Path := n.FindPath(y)
+	// node1Path := n.FindPath(x)
+	// node2Path := n.FindPath(y)
 
-	var shortLen int
+	// var shortLen int
 
-	if len(node1Path) < len(node2Path) {
-		shortLen = len(node1Path)
-	} else {
-		shortLen = len(node2Path)
-	}
-	for i := shortLen - 1; i >= 0; i-- {
-		if node1Path[i] == node2Path[i] {
-			return node1Path[i]
-		}
-	}
+	// if len(node1Path) < len(node2Path) {
+	// 	shortLen = len(node1Path)
+	// } else {
+	// 	shortLen = len(node2Path)
+	// }
+	// for i := shortLen - 1; i >= 0; i-- {
+	// 	if node1Path[i] == node2Path[i] {
+	// 		return node1Path[i]
+	// 	}
+	// }
 	return -1
 }
