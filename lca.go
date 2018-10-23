@@ -18,10 +18,8 @@ type Graph struct {
 //CreateGraph returns an empty Digraph
 func CreateGraph(x int) *Graph {
 	edges := make([][]int, x)
-	for i := 0; i < x; i++ {
-		for j := 0; j < x; j++ {
-			edges[i][j] = 0
-		}
+	for i := range edges {
+		edges[i] = make([]int, x)
 	}
 	graph := &Graph{
 		NumNodes: x,
@@ -49,6 +47,17 @@ func (g *Graph) ValidNode(x int, y int) bool {
 	}
 	if y < g.NumNodes || y > 0 {
 		isfound = true
+	}
+	return isfound
+}
+
+//ValidEdge finds a edge and returns true if found
+func (g *Graph) ValidEdge(x int, y int) bool {
+	isfound := false
+	if g.ValidNode(x, y) {
+		if g.Edges[x][y] == 1 {
+			isfound = true
+		}
 	}
 	return isfound
 }

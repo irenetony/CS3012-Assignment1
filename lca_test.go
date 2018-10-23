@@ -16,12 +16,16 @@ func CreateAGraph() *Graph {
 	return testGraph
 }
 func TestAddEdge(t *testing.T) {
-	testGraph := CreateAGraph(3)
+	testGraph := CreateGraph(3)
 	testGraph.AddEdge(1, 2)
 	testGraph.AddEdge(0, 1)
 	testGraph.AddEdge(0, 2)
 
-	expected := Graph{}
+	expected := true
+	ans := testGraph.ValidEdge(0, 1)
+	if ans != expected {
+		t.Errorf("Failed to add an Edge. Expected: %v, Got: %v", expected, ans)
+	}
 }
 
 //Case 1: Tests for the LCA of two nodes where one is the ancestor of the other.
