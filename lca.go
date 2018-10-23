@@ -1,6 +1,6 @@
 package lca
 
-//Garph: Construct a Graph
+//Graph Construct a Graph
 type Graph struct {
 	NumNodes int
 	Edges    [][]int
@@ -8,25 +8,21 @@ type Graph struct {
 	Min      int
 }
 
-//Construct an edge for a graph
-type Edge struct {
-	From   int
-	To     int
-	Weight int
-}
+//Edge Construct an edge for a graph
+// type Edge struct {
+// 	From   int
+// 	To     int
+// 	Weight int
+// }
 
-//EmptyGraph: returns an empty graph
-func EmptyGraph() *Graph {
-	return &Graph{}
-}
+//CreateGraph returns an empty Digraph
 func CreateGraph(x int) *Graph {
 	edges := make([][]int, x)
 	for i := 0; i < x; i++ {
 		for j := 0; j < x; j++ {
-			edges[i][j] = -1
+			edges[i][j] = 0
 		}
 	}
-
 	graph := &Graph{
 		NumNodes: x,
 		Edges:    edges,
@@ -34,9 +30,25 @@ func CreateGraph(x int) *Graph {
 	}
 	return graph
 }
+
+//AddEdge adds an edge to theDigraph
 func (g *Graph) AddEdge(x int, y int) {
-
+	g.Edges[x][y] = 1
 }
-func (g *Graph) RemoveEdge(x int, y int) {
 
+//RemoveEdge adds an edge to theDigraph
+func (g *Graph) RemoveEdge(x int, y int) {
+	g.Edges[x][y] = 0
+}
+
+//ValidNode finds a node and returns true if found
+func (g *Graph) ValidNode(x int, y int) bool {
+	isfound := false
+	if x < g.NumNodes || x > 0 {
+		isfound = true
+	}
+	if y < g.NumNodes || y > 0 {
+		isfound = true
+	}
+	return isfound
 }
