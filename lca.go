@@ -1,19 +1,14 @@
 package lca
 
+import "fmt"
+
 //Graph Construct a Graph
 type Graph struct {
 	NumNodes int
 	Edges    [][]int
 	Visited  []int
-	Min      int
+	//Min      int
 }
-
-//Edge Construct an edge for a graph
-// type Edge struct {
-// 	From   int
-// 	To     int
-// 	Weight int
-// }
 
 //CreateGraph returns an empty Digraph
 func CreateGraph(x int) *Graph {
@@ -60,4 +55,26 @@ func (g *Graph) ValidEdge(x int, y int) bool {
 		}
 	}
 	return isfound
+}
+
+//DFS takes in the root node and the node to be found. It returns the path to the node.
+func (g *Graph) DFS(root int, find int, path int) int {
+	pathT := 0
+	if root == find {
+		return path
+	}
+	for j := 0; j < g.NumNodes; j++ {
+		if g.Edges[root][j] == 1 && g.Visited[j] == 0 {
+			g.Visited[j] = 1
+			pathT = g.DFS(j, find, path)
+			fmt.Printf("%v -> %v %v\n", root, j, pathT)
+		}
+	}
+	return pathT
+}
+
+//LCA takes in two nodes and returns their lowest common ancestor
+func (g *Graph) LCA(x int, y int) int {
+	lca := 0
+	return lca
 }
