@@ -21,16 +21,18 @@ func EmptyGraph() *Graph {
 }
 func CreateGraph(x int) *Graph {
 	edges := make([][]int, x)
-	for i := range edges {
-		edges[i] = make([]int, x)
+	for i := 0; i < x; i++ {
+		for j := 0; j < x; j++ {
+			edges[i][j] = -1
+		}
 	}
-	return &Graph{
+
+	graph := &Graph{
 		NumNodes: x,
 		Edges:    edges,
 		Visited:  make([]int, x),
-		Min:      x,
 	}
-
+	return graph
 }
 func (g *Graph) AddEdge(x int, y int) {
 
