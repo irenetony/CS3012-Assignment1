@@ -1,6 +1,7 @@
 package lca
 
-import "fmt"
+var path1 []int
+var path2 []int
 
 //Graph Construct a Graph
 type Graph struct {
@@ -16,6 +17,9 @@ func CreateGraph(x int) *Graph {
 	for i := range edges {
 		edges[i] = make([]int, x)
 	}
+	// path1 = make([]int, x)
+	// path2 = make([]int, x)
+
 	graph := &Graph{
 		NumNodes: x,
 		Edges:    edges,
@@ -58,16 +62,27 @@ func (g *Graph) ValidEdge(x int, y int) bool {
 }
 
 //DFS takes in the root node and the node to be found. It returns the path to the node.
-func (g *Graph) DFS(root int, find int, path int) int {
-	pathT := 0
+func (g *Graph) DFS(root int, find int) int {
+	pathT := -1
+	//if the root is the node to be found, return 0
 	if root == find {
-		return path
+		path1 = append(path1, root) //add root to path
+		return 0
 	}
+	//if the root has an edge with the node to be found, then search it and expect a 0 in return
+	if g.Edges[root][find] == 1 {
+		path1 = append(path1, root) //add root to path
+		return g.DFS(find, find)
+	}
+	//if the root doesnt have an edge with the node to be found, then search the adj nodes.
+	//If one search retuns a 0, then add that node to the path
 	for j := 0; j < g.NumNodes; j++ {
 		if g.Edges[root][j] == 1 && g.Visited[j] == 0 {
-			g.Visited[j] = 1
-			pathT = g.DFS(j, find, path)
-			fmt.Printf("%v -> %v %v\n", root, j, pathT)
+			pathT = g.DFS(j, find)
+			if pathT == 0 {
+				path1 = append(path1, root) //add j to the path
+				return pathT
+			}
 		}
 	}
 	return pathT
@@ -76,5 +91,6 @@ func (g *Graph) DFS(root int, find int, path int) int {
 //LCA takes in two nodes and returns their lowest common ancestor
 func (g *Graph) LCA(x int, y int) int {
 	lca := 0
+
 	return lca
 }
