@@ -58,7 +58,6 @@ func (g *Graph) ValidEdge(x int, y int) bool {
 
 //DFS takes in the root node and the node to be found. It returns the path to the node.
 func (g *Graph) DFS(root int, find int, path []int) ([]int, error) {
-	//pathT := make([]int, g.NumNodes)
 
 	//if the root is the node to be found, return 0
 	if root == find {
