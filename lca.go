@@ -2,8 +2,6 @@ package lca
 
 import "errors"
 
-//var path1 []int
-
 //Graph Construct a Graph
 type Graph struct {
 	NumNodes int
@@ -71,12 +69,6 @@ func (g *Graph) DFS(root int, find int, path []int) ([]int, error) {
 		path = append(path, root) //add root to path
 		return path, nil
 	}
-	// //if the root has an edge with the node to be found, then search it and expect a 0 in return
-	// if g.Edges[root][find] == 1 {
-	// 	g.Visited[root] = 1
-	// 	path1 = append(path1, root) //add root to path
-	// 	return g.DFS(find, find)
-	// }
 	//if the root doesnt have an edge with the node to be found, then search the adj nodes.
 	//If one search retuns a 0, then add that node to the path
 	for j := 0; j < g.NumNodes; j++ {
@@ -100,7 +92,7 @@ func (g *Graph) LCA(x int, y int) int {
 	lca := 0
 	var path1 []int
 	var path2 []int
-	//var pathB []int
+
 	if g.ValidNode(x, y) {
 		if x == y {
 			return x
@@ -111,7 +103,7 @@ func (g *Graph) LCA(x int, y int) int {
 		if err != nil {
 			lca = -1
 		}
-		//clear the global array
+		//clear the visited array
 
 		g.Visited = make([]int, g.NumNodes)
 		//find path to y

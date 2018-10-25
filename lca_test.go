@@ -74,14 +74,16 @@ func TestCase5(t *testing.T) {
 	ans := testGraph.LCA(3, 7)
 	expected := -1
 	if ans != expected {
-		t.Errorf("Failed Case 4. Expected: %v, Got: %v", expected, ans)
+		t.Errorf("Failed Case 5. Expected: %v, Got: %v", expected, ans)
 	}
 }
+
+//Case 6: Test for the lca of the same node, which should be the same node
 func TestCase6(t *testing.T) {
 	testGraph := CreateAGraph()
 	ans := testGraph.LCA(3, 3)
 	expected := 3
 	if ans != expected {
-		t.Errorf("Failed Case 4. Expected: %v, Got: %v", expected, ans)
+		t.Errorf("Failed Case 6. Expected: %v, Got: %v", expected, ans)
 	}
 }
