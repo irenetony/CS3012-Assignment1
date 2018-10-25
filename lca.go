@@ -7,7 +7,6 @@ type Graph struct {
 	NumNodes int
 	Edges    [][]int
 	Visited  []int
-	//Min      int
 }
 
 //CreateGraph returns an empty Digraph
@@ -16,9 +15,6 @@ func CreateGraph(x int) *Graph {
 	for i := range edges {
 		edges[i] = make([]int, x)
 	}
-	// path1 = make([]int, x)
-	// path2 = make([]int, x)
-
 	graph := &Graph{
 		NumNodes: x,
 		Edges:    edges,
