@@ -1,7 +1,8 @@
 package lca
 
-var path1 []int
-var path2 []int
+import "errors"
+
+//var path1 []int
 
 //Graph Construct a Graph
 type Graph struct {
@@ -62,12 +63,13 @@ func (g *Graph) ValidEdge(x int, y int) bool {
 }
 
 //DFS takes in the root node and the node to be found. It returns the path to the node.
-func (g *Graph) DFS(root int, find int) int {
-	pathT := -1
+func (g *Graph) DFS(root int, find int, path []int) ([]int, error) {
+	//pathT := make([]int, g.NumNodes)
+
 	//if the root is the node to be found, return 0
 	if root == find {
-		path1 = append(path1, root) //add root to path
-		return 0
+		path = append(path, root) //add root to path
+		return path, nil
 	}
 	// //if the root has an edge with the node to be found, then search it and expect a 0 in return
 	// if g.Edges[root][find] == 1 {
@@ -80,43 +82,54 @@ func (g *Graph) DFS(root int, find int) int {
 	for j := 0; j < g.NumNodes; j++ {
 		if g.Edges[root][j] == 1 && g.Visited[j] == 0 {
 			g.Visited[root] = 1
-			pathT = g.DFS(j, find)
-			if pathT == 0 {
-				path1 = append(path1, root) //add j to the path
-				return pathT
+			pathT, err := g.DFS(j, find, path)
+			if err == nil {
+				if pathT[0] == find {
+					path = pathT
+					path = append(path, root) //add j to the path
+					return path, nil
+				}
 			}
 		}
 	}
-	return pathT
+	return path, errors.New("path not found")
 }
 
 //LCA takes in two nodes and returns their lowest common ancestor
 func (g *Graph) LCA(x int, y int) int {
-	lca := -1
-	if x == y {
-		return x
-	}
-	//find path to x
-	g.DFS(0, x)
-	pathA := make([]int, len(path1))
-	copy(pathA, path1)
+	lca := 0
+	var path1 []int
+	var path2 []int
+	//var pathB []int
+	if g.ValidNode(x, y) {
+		if x == y {
+			return x
+		}
+		//find path to x
 
-	//clear the global array
-	path1 = path1[:0]
-	g.Visited = make([]int, g.NumNodes)
-	//find path to y
-	g.DFS(0, y)
-	pathB := make([]int, len(path1))
-	copy(pathB, path1)
+		pathA, err := g.DFS(0, x, path1)
+		if err != nil {
+			lca = -1
+		}
+		//clear the global array
 
-	for i := 0; i < len(pathA); i++ {
-		for j := 0; j < len(pathB); j++ {
-			if pathA[i] == pathB[j] {
-				return pathA[i]
+		g.Visited = make([]int, g.NumNodes)
+		//find path to y
+		pathB, err := g.DFS(0, y, path2)
+		if err != nil {
+			lca = -1
+		}
+		if lca != -1 {
+			for i := 0; i < len(pathA); i++ {
+				for j := 0; j < len(pathB); j++ {
+					if pathA[i] == pathB[j] {
+						return pathA[i]
+					}
+				}
+
 			}
 		}
 
 	}
-	path1 = path1[:0]
 	return lca
 }

@@ -30,7 +30,7 @@ func TestAddEdge(t *testing.T) {
 }
 
 //Case 1: Tests for the LCA of two nodes where one is the ancestor of the other.
-func TestLca(t *testing.T) {
+func TestCase1(t *testing.T) {
 	testGraph := CreateAGraph()
 	ans := testGraph.LCA(1, 2)
 	expected := 1
@@ -38,16 +38,7 @@ func TestLca(t *testing.T) {
 		t.Errorf("Failed Case 1. Expected: %v, Got: %v", expected, ans)
 	}
 }
-func TestLca2(t *testing.T) {
-	testGraph := CreateAGraph()
-	ans := testGraph.LCA(5, 3)
-	expected := 1
-	if ans != expected {
-		t.Errorf("Failed Case 2. Expected: %v, Got: %v", expected, ans)
-	}
-
-}
-func TestLca3(t *testing.T) {
+func TestCase3(t *testing.T) {
 	testGraph := CreateAGraph()
 	ans := testGraph.LCA(6, 7)
 	expected := 2
@@ -57,12 +48,39 @@ func TestLca3(t *testing.T) {
 
 }
 
+func TestCase2(t *testing.T) {
+	testGraph := CreateAGraph()
+	ans := testGraph.LCA(5, 3)
+	expected := 1
+	if ans != expected {
+		t.Errorf("Failed Case 2. Expected: %v, Got: %v", expected, ans)
+	}
+
+}
+
 //Case 4: Test for the LCA of two nodes that do not have and ancestor.
-func TestLca4(t *testing.T) {
+func TestCase4(t *testing.T) {
 	testGraph := CreateAGraph()
 	testGraph.RemoveEdge(4, 7)
 	ans := testGraph.LCA(7, 3)
 	expected := -1
+	if ans != expected {
+		t.Errorf("Failed Case 4. Expected: %v, Got: %v", expected, ans)
+	}
+}
+func TestCase5(t *testing.T) {
+	testGraph := CreateAGraph()
+	testGraph.RemoveEdge(4, 7)
+	ans := testGraph.LCA(3, 7)
+	expected := -1
+	if ans != expected {
+		t.Errorf("Failed Case 4. Expected: %v, Got: %v", expected, ans)
+	}
+}
+func TestCase6(t *testing.T) {
+	testGraph := CreateAGraph()
+	ans := testGraph.LCA(3, 3)
+	expected := 3
 	if ans != expected {
 		t.Errorf("Failed Case 4. Expected: %v, Got: %v", expected, ans)
 	}
