@@ -64,6 +64,6 @@ func TestLca4(t *testing.T) {
 	ans := testGraph.LCA(7, 3)
 	expected := -1
 	if ans != expected {
-		t.Errorf("Failed Case 3. Expected: %v, Got: %v", expected, ans)
+		t.Errorf("Failed Case 4. Expected: %v, Got: %v", expected, ans)
 	}
 }
