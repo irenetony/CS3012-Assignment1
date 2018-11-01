@@ -1,2 +1,2 @@
 # CS3012-Assignment1
-This is a lowest common ancestor finder for a Directed Graph.
+This is a lowest common ancestor finder for a Binary tree.
