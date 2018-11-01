@@ -2,121 +2,106 @@ package lca
 
 import "errors"
 
-//Graph Construct a Graph
-type Graph struct {
-	NumNodes int
-	Edges    [][]int
-	Visited  []int
+//Contruct a Node
+
+type Node struct {
+	Left  *Node
+	Right *Node
+	Key   int
+	Value int
 }
 
-//CreateGraph returns an empty Digraph
-func CreateGraph(x int) *Graph {
-	edges := make([][]int, x)
-	for i := range edges {
-		edges[i] = make([]int, x)
+func EmptyBinaryTree() *Node {
+	return &Node{}
+}
+
+func (n *Node) Insert(key int, data int) error {
+
+	if n == nil {
+		return errors.New("Cannot insert a value into a nil tree")
 	}
-	graph := &Graph{
-		NumNodes: x,
-		Edges:    edges,
-		Visited:  make([]int, x),
+
+	switch {
+	//If the data is already in the tree, return.
+	case key == n.Key:
+		return nil
+		//If the data value is less than the current node’s value, and if the left child node is nil, insert a new left child node. Else call Insert on the left subtree.
+	case key < n.Key:
+		if n.Left == nil {
+			n.Left = &Node{Key: key, Value: data}
+			return nil
+		}
+		return n.Left.Insert(key, data)
+		//If the data value is greater than the current node’s value, do the same but for the right subtree.
+	case key > n.Key:
+		if n.Right == nil {
+			n.Right = &Node{Key: key, Value: data}
+			return nil
+		}
+		return n.Right.Insert(key, data)
 	}
-	return graph
+	return nil
 }
 
-//AddEdge adds an edge to theDigraph
-func (g *Graph) AddEdge(x int, y int) {
-	g.Edges[x][y] = 1
-}
-
-//RemoveEdge adds an edge to theDigraph
-func (g *Graph) RemoveEdge(x int, y int) {
-	g.Edges[x][y] = 0
-}
-
-//ValidNode finds a node and returns true if found
-func (g *Graph) ValidNode(x int, y int) bool {
-	isfound := false
-	if x < g.NumNodes || x > 0 {
-		isfound = true
+func (n *Node) Get(x int) int {
+	if n == nil {
+		return -1
 	}
-	if y < g.NumNodes || y > 0 {
-		isfound = true
+	switch {
+	//If the current node contains the value, return the node.
+	case x == n.Key:
+		return n.Value
+		//If the data value is less than the current node’s value, call Find for the left child node,
+	case x < n.Key:
+		return n.Left.Get(x)
+		//else call Find for the right child node.
+	default:
+		return n.Right.Get(x)
 	}
-	return isfound
+}
+func (n *Node) FindPath(x int) []int {
+	var path []int
+	if hasPath := n.findPath(&path, x); !hasPath {
+		return nil
+	}
+	return path
+}
+func (n *Node) findPath(path *[]int, x int) bool {
+	var contains bool
+
+	if n == nil {
+		contains = false
+	}
+	*path = append(*path, n.Key)
+
+	if n.Key == x {
+		contains = true
+	}
+	if x < n.Key && n.Left != nil && n.Left.findPath(path, x) {
+		contains = true
+	}
+	if x > n.Key && n.Right != nil && n.Right.findPath(path, x) {
+		contains = true
+	}
+	return contains
 }
 
-//ValidEdge finds a edge and returns true if found
-func (g *Graph) ValidEdge(x int, y int) bool {
-	isfound := false
-	if g.ValidNode(x, y) {
-		if g.Edges[x][y] == 1 {
-			isfound = true
+func (n *Node) LCA(x int, y int) int {
+
+	node1Path := n.FindPath(x)
+	node2Path := n.FindPath(y)
+
+	var shortLen int
+
+	if len(node1Path) < len(node2Path) {
+		shortLen = len(node1Path)
+	} else {
+		shortLen = len(node2Path)
+	}
+	for i := shortLen - 1; i >= 0; i-- {
+		if node1Path[i] == node2Path[i] {
+			return node1Path[i]
 		}
 	}
-	return isfound
-}
-
-//DFS takes in the root node and the node to be found. It returns the path to the node.
-func (g *Graph) DFS(root int, find int, path []int) ([]int, error) {
-
-	//if the root is the node to be found, return 0
-	if root == find {
-		path = append(path, root) //add root to path
-		return path, nil
-	}
-	//if the root doesnt have an edge with the node to be found, then search the adj nodes.
-	//If one search retuns a 0, then add that node to the path
-	for j := 0; j < g.NumNodes; j++ {
-		if g.Edges[root][j] == 1 && g.Visited[j] == 0 {
-			g.Visited[root] = 1
-			pathT, err := g.DFS(j, find, path)
-			if err == nil {
-				if pathT[0] == find {
-					path = pathT
-					path = append(path, root) //add j to the path
-					return path, nil
-				}
-			}
-		}
-	}
-	return path, errors.New("path not found")
-}
-
-//LCA takes in two nodes and returns their lowest common ancestor
-func (g *Graph) LCA(x int, y int) int {
-	lca := 0
-	var path1 []int
-	var path2 []int
-
-	if g.ValidNode(x, y) {
-		if x == y {
-			return x
-		}
-		//find path to x
-
-		pathA, err := g.DFS(0, x, path1)
-		if err != nil {
-			lca = -1
-		}
-		//clear the visited array
-
-		g.Visited = make([]int, g.NumNodes)
-		//find path to y
-		pathB, err := g.DFS(0, y, path2)
-		if err != nil {
-			lca = -1
-		}
-		if lca != -1 {
-			for i := 0; i < len(pathA); i++ {
-				for j := 0; j < len(pathB); j++ {
-					if pathA[i] == pathB[j] {
-						return pathA[i]
-					}
-				}
-
-			}
-		}
-
-	}
-	return lca
+	return -1
 }
